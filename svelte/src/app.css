@@ -14,6 +14,10 @@
 	@apply bg-blue-700;
 }
 
+.btn-primary:disabled {
+	@apply bg-blue-200 text-black;
+}
+
 .btn-pure {
 	@apply cursor-pointer  text-black;
 }
