@@ -1,0 +1,17 @@
+query Posts {
+	posts {
+		nodes {
+			content
+			date
+			title
+			link
+			slug
+			featuredImage {
+				node {
+					uri
+					mimeType
+				}
+			}
+		}
+	}
+}

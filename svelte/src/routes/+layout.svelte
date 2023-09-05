@@ -2,8 +2,6 @@
 	import { page } from '$app/stores';
 	import '../app.css';
 
-	console.log($page);
-
 	interface Route {
 		title: string;
 		path: string;
@@ -25,12 +23,16 @@
 		{
 			title: 'Budget',
 			path: '/budget'
+		},
+		{
+			title: 'Blog',
+			path: '/blog'
 		}
 	];
 </script>
 
 <div
-	class="flex h-screen w-full flex-col items-center bg-gradient-to-b from-sky-300 via-blue-500 to-indigo-700 text-black"
+	class="flex h-full min-h-screen w-full flex-col items-center bg-gradient-to-b from-sky-300 via-blue-500 to-indigo-700 text-black"
 >
 	<nav class="m-2 flex space-x-4">
 		{#each routes as route}

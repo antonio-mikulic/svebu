@@ -3,12 +3,10 @@
 
 	let pokemonResponse: String;
 
-		const getPokemon = async () => {
-		console.log(name);
+	const getPokemon = async () => {
 		const res = await fetch(`http://127.0.0.1:8081?name=${name}`);
 		pokemonResponse = await res.json();
 	};
-
 </script>
 
 <form
@@ -20,15 +18,13 @@
 		<input class="w-6/12 p-2" type="string" name="location" bind:value={name} />
 	</div>
 
-		<div class="mt-4 flex justify-end">
+	<div class="mt-4 flex justify-end">
 		<button type="submit" class="btn btn-primary">Submit</button>
 	</div>
-
 </form>
 
 {#if pokemonResponse}
-<div class="mt-4 flex flex-col">
-	<p>{pokemonResponse}</p>
-</div>
+	<div class="mt-4 flex flex-col">
+		<p>{pokemonResponse}</p>
+	</div>
 {/if}
-

@@ -1,0 +1,1 @@
+2023/09/03 14:09:45 [error] 1704#352: *10334 WSARecv() failed (10054: An existing connection was forcibly closed by the remote host) while reading response header from upstream, client: 127.0.0.1, server: , request: "POST /graphql HTTP/1.0", upstream: "fastcgi://127.0.0.1:10002", host: "svebu-wp.local"

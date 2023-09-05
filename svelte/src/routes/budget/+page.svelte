@@ -9,7 +9,6 @@
 
 	const handleSubmit = () => {
 		addBudgetItem(budgetItem);
-		console.log(budgetItem);
 
 		budgetItem = getDefaultBudgetItem();
 	};
