@@ -11,7 +11,7 @@
 	};
 </script>
 
-<h3>Welcome to my blog</h3>
+<h2 class="text-4xl font-bold">Hello World</h2>
 
 {#if $Posts.fetching}
 	<p>Fetching posts...</p>

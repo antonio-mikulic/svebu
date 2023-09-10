@@ -9,26 +9,44 @@ import (
 	"net/http"
 	"os"
 	pokemon "svebu/pokemon/models"
+	"sync"
+	"time"
 )
 
 func HandleRequests() {
+	fmt.Println("Listening on port 8081")
 	http.HandleFunc("/", getRandomPokemonForUser)
 	log.Fatal(http.ListenAndServe("127.0.0.1:8081", nil))
+
 }
 
 func getRandomPokemonForUser(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
+	start := time.Now()
 
 	pokemonList := getRandomPokemon()
-	var pokemonData []pokemon.PokemonData
+	pokemonData := make(chan pokemon.PokemonData, len(pokemonList))
+	wg := &sync.WaitGroup{}
+	wg.Add(len(pokemonList))
+
 	for i := 0; i < len(pokemonList); i++ {
-		pokemonData = append(pokemonData, getPokemonDetails(pokemonList[i]))
+		go getPokemonDetails(pokemonList[i], pokemonData, wg)
 	}
 
-	json.NewEncoder(w).Encode(pokemonData)
+	wg.Wait()
+	close(pokemonData)
+
+	result := make([]pokemon.PokemonData, len(pokemonList))
+	for i := 0; i < len(pokemonList); i++ {
+		result[i] = <-pokemonData
+	}
+
+	fmt.Println("Time taken to get all pokemon details: ", time.Since(start))
+
+	json.NewEncoder(w).Encode(result)
 }
 
-func getRandomPokemon() []string{
+func getRandomPokemon() []string {
 	response, err := http.Get("http://pokeapi.co/api/v2/pokedex/kanto/")
 
 	if err != nil {
@@ -59,7 +77,8 @@ func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
-func getPokemonDetails(pokemonName string) pokemon.PokemonData {
+func getPokemonDetails(pokemonName string, chn chan pokemon.PokemonData, wg *sync.WaitGroup) {
+	start := time.Now()
 	response, err := http.Get("http://pokeapi.co/api/v2/pokemon/" + pokemonName)
 
 	if err != nil {
@@ -75,5 +94,7 @@ func getPokemonDetails(pokemonName string) pokemon.PokemonData {
 	var responseObject pokemon.PokemonData
 	json.Unmarshal(responseData, &responseObject)
 
-	return responseObject
+	chn <- responseObject
+	wg.Done()
+	fmt.Println("Time taken to get pokemon details for ", pokemonName, " : ", time.Since(start))
 }

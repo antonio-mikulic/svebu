@@ -40,8 +40,10 @@
 	}
 </script>
 
-<div class="mx-4 mb-16 mt-4 flex max-w-5xl flex-col gap-2 rounded border bg-blue-300 p-4 shadow-lg">
-	<h5><a href={url}>{title}</a></h5>
+<div
+	class="mx-4 mb-16 mt-4 flex w-full max-w-5xl flex-col items-center gap-2 rounded border bg-blue-300 p-4 shadow-lg"
+>
+	<h3 class="text-3xl font-bold"><a href={url}>{title}</a></h3>
 
 	{#if image}
 		<img src={imageUrl} alt={title} />
