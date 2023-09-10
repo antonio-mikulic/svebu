@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PokemonData } from '../interfaces/pokemon.interface';
+	import { fly } from 'svelte/transition';
 
 	let name: String;
 	let isLoading = false;
@@ -68,11 +69,12 @@
 	<p>This pokemons might be fun for you to try:</p>
 
 	<p>{message()}</p>
-	<div class="mt-4 flex">
-		{#each pokemonResponse as pokemon}
+	<div class="mt-4 flex flex-wrap gap-4">
+		{#each pokemonResponse as pokemon (pokemon.name)}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
-				class="m-4 flex-col items-center justify-center rounded-full border-4 bg-gradient-to-b from-white to-red-500 p-4"
+				in:fly|global
+				class="flex-col items-center justify-center rounded-full border-4 bg-gradient-to-b from-white to-red-500 p-4"
 				role="button"
 				tabindex="0"
 				on:click={() => goToPokemonDetails(pokemon)}
