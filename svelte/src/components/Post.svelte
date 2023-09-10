@@ -10,7 +10,6 @@
 	export let imgMimeType: string | null;
 	export let slug: string | null;
 
-	let descriptionHtml: Element;
 	let imageUrl = '';
 	function removeTrailingSlash(str: string) {
 		return str.replace(/\/+$/, '');
@@ -19,14 +18,6 @@
 	function removeSlug(url: string, slug: string) {
 		const slugWithSlash = `${slug}/`;
 		return url.replace(slugWithSlash, '');
-	}
-
-	$: {
-		setTimeout(() => {
-			if (descriptionHtml) {
-				descriptionHtml.innerHTML = description ?? '';
-			}
-		}, 0);
 	}
 
 	$: {
@@ -49,5 +40,5 @@
 		<img src={imageUrl} alt={title} />
 	{/if}
 
-	<div bind:this={descriptionHtml} />
+	<div>{@html description}</div>
 </div>
