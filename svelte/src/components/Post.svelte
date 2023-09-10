@@ -5,8 +5,8 @@
 
 	export let title: string | null;
 	export let image: string | null;
-	export let description: string | null;
-	export let url: string | null;
+	export let content: string | null;
+	export let link: string | null;
 	export let imgMimeType: string | null;
 	export let slug: string | null;
 
@@ -34,11 +34,11 @@
 <div
 	class="mx-4 mb-16 mt-4 flex w-full max-w-5xl flex-col items-center gap-2 rounded border bg-blue-300 p-4 shadow-lg"
 >
-	<h3 class="text-3xl font-bold"><a href={url}>{title}</a></h3>
+	<h3 class="text-3xl font-bold"><a href={link}>{title}</a></h3>
 
 	{#if image}
 		<img src={imageUrl} alt={title} />
 	{/if}
 
-	<div>{@html description}</div>
+	<div>{@html content}</div>
 </div>

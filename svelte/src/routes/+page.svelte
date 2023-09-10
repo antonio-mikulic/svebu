@@ -6,6 +6,18 @@
 
 	let pokemonResponse: PokemonData[];
 
+	$: message = () => {
+		console.log('getting msg', pokemonResponse);
+		switch (pokemonResponse?.length) {
+			case undefined:
+				return '';
+			case 5:
+				return `Found ${pokemonResponse.length} recommended Pokemons`;
+			default:
+				return `Found only ${pokemonResponse.length} recommended pokemons, others hid during our search`;
+		}
+	};
+
 	const getPokemon = async () => {
 		isLoading = true;
 		try {
@@ -54,6 +66,8 @@
 {#if pokemonResponse}
 	<h3 class="text-2xl text-indigo-700">Hello {name}!</h3>
 	<p>This pokemons might be fun for you to try:</p>
+
+	<p>{message()}</p>
 	<div class="mt-4 flex">
 		{#each pokemonResponse as pokemon}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
